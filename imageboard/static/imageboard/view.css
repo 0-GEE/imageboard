@@ -53,3 +53,8 @@
     font-size: large;
     color: rgb(255, 166, 0);
 }
+
+#tag-button-buffer {
+    width: 100%;
+    height: 20px;
+}
