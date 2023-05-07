@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Add Tag{% endblock %}
+{% load static %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'imageboard/tag.css' %}" />
+{% endblock %}
+{% block content %}
+
+{% if form.errors %}
+<p>Something is wrong with your tag. Please try again.</p>
+<p>Errors found:</p>
+{% for field in form %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+{% endfor %}
+{% endif %}
+<h1 class="text-center" id="tag-title">Add a tag to this post</h1>
+<form class="border rounded" id="tag-form" method="post" action="{% url 'imageboard:tag' post.id %}">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <label id="tagname-label" for="tagname-field" class="col-sm-1 col-form-label">Tag</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="name" maxlength="100" required id="tagname-field">
+        </div>
+    </div>
+    <input class="btn btn-outline-light" type="submit" value="Add tag">
+</form>
+{% endblock %}

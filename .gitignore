@@ -1,0 +1,12 @@
+__pycache__
+*.sqlite3
+*.jpg
+*.png
+*.jfif
+*.jpeg
+jquery-ui-1.13.2.custom
+jqtest*
+*.exe
+env
+.env
+*.json

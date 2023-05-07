@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Listing{% endblock %}
+
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'imageboard/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="search">
+    <p>Perform a search! (Note: nonexistent tags in the search query will be ignored)</p>
+    <form action="{% url 'imageboard:results' %}" method="get">
+        <div class="border rounded" id="search-form">
+            <input class="search-form-item" id="autocomplete" name="q" placeholder="Search">
+            <input class="search-form-item btn btn-outline-light" type="submit" value="search">
+        </div>
+    </form>
+</div>
+<h2 class="text-center">Posts</h2>
+<div id="posts-container" class="border rounded">
+    {% for post in postlist %}
+    <div class="post-preview">
+        <a href="{% url 'imageboard:view' post.id %}">
+            <img class="border border-success border-3" src="{{ post.file.url }}" alt="{{ post.file.url }}" style="max-width: 100px;">
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const headers = {
+        Accept: "application/json",
+    };
+    var searchStringSoFar = "";
+    var completion = "";
+    fetch("{% url 'imageboard:apitags' %}", {
+        headers: headers,
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            $("#autocomplete").autocomplete({
+                source: data.tags,
+                search: function(event, ui) {
+                    var s = event.target.value;
+                    if (s == "") {
+                        searchStringSoFar = s;
+                    } else {
+                        let tokens = s.split(" ");
+                        tokens.pop();
+                        searchStringSoFar = tokens.join(" ");
+                    }
+                },
+                select: function (event, ui) {
+                    completion = searchStringSoFar + " " + ui.item.value;
+                },
+                close: function (event, ui) {
+                    if (completion != "") {
+                        event.target.value = completion;
+                    }
+                    completion = "";
+                }
+            });
+        });
+</script>
+{% endblock %}

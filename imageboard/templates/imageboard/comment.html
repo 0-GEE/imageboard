@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}comment{% endblock %}
+{% load static %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'imageboard/comment.css' %}" />
+{% endblock %}
+{% block content %}
+
+
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Something is wrong with your comment. Please try again.</strong>
+    {% for field in form %}
+        {% for error in field.errors %}
+        <p>{{ error|escape }}</p>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endif %}
+<h1 class="text-center" id="comment-title">Post a comment</h1>
+<form class="border rounded" id="comment-form" method="post" action="{% url 'imageboard:comment' post.id %}">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <label id="comment-text-label" for="comment-field" class="col-sm-1 col-form-label">Comment</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="content" maxlength="250" required id="comment-field">
+        </div>
+    </div>
+    <input class="btn btn-outline-light" type="submit" value="Comment!">
+</form>
+{% endblock  %}

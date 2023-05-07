@@ -1,0 +1,57 @@
+{% extends 'base.html' %} 
+{% block title %}Login{% endblock %} 
+{% load static %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'imageboard/login.css' %}" />
+{% endblock %} 
+{% block content %}
+
+{% if form.errors %}
+  <div class="error-indication alert alert-danger text-center">
+    <strong>
+      Your username and password didn't match. Please try again.
+    </strong>
+  </div>
+
+  {% endif %} 
+  {% if next %} 
+    {% if user.is_authenticated %}
+    <div class="error-indication alert alert-danger text-center">
+        <strong>
+        Your account doesn't have access to this page. To proceed, please login
+        with an account that has sufficient privileges.
+        </strong>
+    </div>
+    {% else %}
+    <div class="error-indication alert alert-warning text-center">
+        <strong> Please login to see this page. </strong>
+    </div>
+
+    {% endif %} 
+{% endif %}
+<h1 class="text-center" id="login-title">Login</h1>
+
+<form class="border rounded" id="login-form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    <div class="row mb-3">
+        <label for="username-field" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="username" autofocus autocapitalize="none" maxlength="150" required id="username-field">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="password-field" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            <input type="password" name="password" class="form-control" required id="password-field">
+        </div>
+    </div>
+    <input class="btn btn-outline-light" type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<div class="text-center" id="signup-prompt">
+    <p>No account?</p>
+    <a class="btn btn-outline-light" href="{% url 'imageboard:signup' %}">Sign up now!</a>
+</div>
+{% endblock %}

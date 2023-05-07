@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up{% endblock %}
+{% load static %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'imageboard/registration.css' %}" />
+{% endblock %} 
+{% block content %}
+{% if form.erors %}
+<div class="alert alert-danger">
+    <strong>Your account info is invalid. Please try again.</strong>
+    {% for field in form %}
+        {% for error in field.errors %}
+        <p>{{ error|escape }}</p>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endif %}
+<h1 class="text-center" id="signup-title">Account creation</h1>
+<form class="border rounded" id="signup-form" method="post" action="{% url 'imageboard:signup' %}">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <label for="username-field" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="username" maxlength="150" required id="username-field">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="password-field" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            <input type="password" name="password" class="form-control" required id="password-field" maxlength="128">
+        </div>
+    </div>
+
+    <input class="btn btn-outline-light" type="submit" value="Register!">
+</form>
+
+{% endblock  %}

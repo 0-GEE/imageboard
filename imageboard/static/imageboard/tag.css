@@ -1,0 +1,14 @@
+#tag-form {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+}
+
+#tag-title {
+    padding-bottom: 50px;
+}
+
+#tagname-label {
+    font-size: x-large;
+}
+

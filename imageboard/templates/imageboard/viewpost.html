@@ -1,0 +1,99 @@
+{% extends 'base.html' %} {% block title %}View{% endblock %} {% load static %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'imageboard/view.css' %}" />
+{% endblock %} {% block content %}
+<div class="search">
+  <p>
+    Perform a search! (Note: nonexistent tags in the search query will be
+    ignored)
+  </p>
+  <form action="{% url 'imageboard:results' %}" method="get">
+    <div class="border rounded" id="search-form">
+      <input
+        class="search-form-item"
+        id="autocomplete"
+        name="q"
+        placeholder="Search"
+      />
+      <input
+        class="search-form-item btn btn-outline-light"
+        type="submit"
+        value="search"
+      />
+    </div>
+  </form>
+</div>
+<div class="post-info text-center">
+  <h2>{{ post.title }}</h2>
+  <p>posted by {{ post.author.username }} on {{ post.upload_date }} UTC</p>
+</div>
+<div id="post-container">
+  <div id="tags-container" class="post-container-item border rounded">
+    <p>Tags</p>
+    {% for tag in tags %}
+    <div class="tag">
+      <a href="{% url 'imageboard:results' %}?q={{ tag.name }}"
+        >{{ tag.name }}</a
+      >
+    </div>
+    {% endfor %}
+    <br>
+    <a class="btn btn-outline-light" href="{% url 'imageboard:tag' post.id %}">Add a tag</a>
+  </div>
+  <img
+    id="post-image"
+    class="post-container-item"
+    src="{{ post.file.url }}"
+    alt="{{ post.file.url }}"
+    style="max-width: 85%"
+  />
+</div>
+<div id="comments-container">
+  <div class="comments-header text-center">
+    <p class="display-3">Comments</p>
+    <a class="btn btn-outline-light" href="{% url 'imageboard:comment' post.id %}">Post a comment!</a>
+  </div>
+  {% for comment in comments %}
+  <div class="comment border rounded">
+    <p class="comment-author">{{ comment.author.username }}:</p>
+    <p class="comment-content">{{ comment.content }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  const headers = {
+    Accept: "application/json",
+  };
+  var searchStringSoFar = "";
+  var completion = "";
+  fetch("{% url 'imageboard:apitags' %}", {
+    headers: headers,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      $("#autocomplete").autocomplete({
+        source: data.tags,
+        search: function (event, ui) {
+          var s = event.target.value;
+          if (s == "") {
+            searchStringSoFar = s;
+          } else {
+            let tokens = s.split(" ");
+            tokens.pop();
+            searchStringSoFar = tokens.join(" ");
+          }
+        },
+        select: function (event, ui) {
+          completion = searchStringSoFar + " " + ui.item.value;
+        },
+        close: function (event, ui) {
+          if (completion != "") {
+            event.target.value = completion;
+          }
+          completion = "";
+        },
+      });
+    });
+</script>
+{% endblock %}

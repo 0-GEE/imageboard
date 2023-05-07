@@ -1,0 +1,91 @@
+html {
+    background-color: black;
+}
+#bg-pics-container {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    overflow: clip;
+}
+.bg-pic {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+}
+.bg-pic img {
+    width: 100%;
+}
+#banner-container {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 30%;
+    width: 100%;
+    overflow: clip;
+}
+#banner-title {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    width: 100%;
+    height: 100%;
+}
+#banner-title h1 {
+    color: white;
+    font-size: x-large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+#banner-bg {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+}
+#buttons-container {
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    width: 50%;
+    height: 40%;
+}
+#enter-button {
+    background-color: black;
+    border: 5px solid white;
+    position: absolute;
+    left: 0%;
+    top: 50%;
+}
+#enter-button-text {
+    font-size: x-large;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+#login-button {
+    background-color: black;
+    border: 5px solid white;
+    position: absolute;
+    left: 30%;
+    top: 50%;
+}
+#login-button-text {
+    font-size: x-large;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+#white-flash {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
+    overflow: clip;
+    background-color: white;
+}
