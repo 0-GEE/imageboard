@@ -22,7 +22,8 @@ def get_all_tagnames_sqlite3(request):
                 l.append(conditional_escape(tags[i-1].name))
         except:
             continue
-    l.append(conditional_escape(tags[len(tags)-1].name))
+    if len(tags) > 0:
+        l.append(conditional_escape(tags[len(tags)-1].name))
     rdata = {'tags': l}
 
     return JsonResponse(rdata)

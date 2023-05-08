@@ -9,6 +9,11 @@
 {% endblock %}
 
 {% block content %}
+<div id="moe-counter">
+    {% for digit in digits %}
+    <img class="count-digit" src="{% static 'imageboard/' %}{{ digit }}.gif" alt="{{ digit }}.gif">
+    {% endfor %}
+</div>
 <div class="search">
     <p>Perform a search! (Note: nonexistent tags in the search query will be ignored)</p>
     <form action="{% url 'imageboard:results' %}" method="get">

@@ -25,6 +25,7 @@ class IndexView(generic.ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['boardname'] = BOARDNAME
+        ctx['digits'] = str(Posting.objects.count())
         return ctx
 
 
@@ -121,6 +122,7 @@ class SearchResultsView(generic.ListView):
         ctx['expression'] = self.request.GET.get('q').split(' ')
         ctx['boardname'] = BOARDNAME
         ctx['keywords'] = OPERATORS
+        ctx['digits'] = str(Posting.objects.count())
         return ctx
 
 

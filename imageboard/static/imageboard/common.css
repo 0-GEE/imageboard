@@ -1,3 +1,17 @@
 #main-content {
     padding: 10px 10px 10px 10px;
 }
+
+#moe-counter {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.counter-digit {
+    max-width: 100px;
+}
