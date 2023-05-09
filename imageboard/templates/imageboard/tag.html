@@ -5,7 +5,11 @@
 <link rel="stylesheet" href="{% static 'imageboard/tag.css' %}" />
 {% endblock %}
 {% block content %}
-
+{% if error %}
+<div class="alert alert-danger text-center">
+    <strong>ERROR: {{ error|escape }}</strong>
+</div>
+{% endif %}
 {% if form.errors %}
 <p>Something is wrong with your tag. Please try again.</p>
 <p>Errors found:</p>

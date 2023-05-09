@@ -256,7 +256,15 @@ def add_tag(request, post_id):
         if form.is_valid():
 
             form.instance.post = parent_post
-            form.save()
+            try:
+                form.save()
+            except Exception as e:
+                return render(request, 'imageboard/tag.html', {
+                    'post': parent_post,
+                    'form': form,
+                    'boardname': BOARDNAME,
+                    'error': e
+                })
 
             return HttpResponseRedirect(reverse('imageboard:view', kwargs={'post_id': post_id}))
     else:
