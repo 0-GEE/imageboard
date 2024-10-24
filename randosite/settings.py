@@ -31,11 +31,9 @@ load_dotenv(find_dotenv())
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG', True))
 
-ALLOWED_HOSTS = []
-with open(os.getenv('HOSTS_FILE'), 'r', encoding='utf-8') as f:
-    ALLOWED_HOSTS = json.load(f)
+ALLOWED_HOSTS = [h for h in os.getenv("ALLOWED_HOSTS").split(",")]
 
 
 # Application definition
